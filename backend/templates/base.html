@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="csrf" content="{{ csrf_token() }}">
+<title>{% block title %}Smart Campus Assistant{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% block head %}{% endblock %}
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('dashboard') if user else url_for('landing') }}">
+    <span class="logo" aria-hidden="true">&#10148;</span> Smart Campus Assistant
+  </a>
+  <nav class="nav" aria-label="Main">
+    {% if user %}
+      <a href="{{ url_for('dashboard') }}">Map and assistant</a>
+      <a href="{{ url_for('directory') }}">Directory</a>
+      {% if user['role'] == 'admin' %}<a href="{{ url_for('admin.users') }}">Admin</a>{% endif %}
+      <form method="post" action="{{ url_for('auth.logout') }}" class="inline">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="linklike" type="submit">Log out ({{ user['usn'] }})</button>
+      </form>
+    {% else %}
+      <a href="{{ url_for('guide.portal') }}">Visitor guide</a>
+      <a href="{{ url_for('auth.login') }}">Student / staff log in</a>
+      <a class="btn small" href="{{ url_for('auth.register') }}">Register</a>
+    {% endif %}
+  </nav>
+</header>
+<main class="wrap">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <p class="flash {{ category }}" role="status">{{ message }}</p>
+    {% endfor %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="foot">VTU TechVista Campus (demonstration campus) &middot; Visitors see public information only</footer>
+{% block scripts %}{% endblock %}
+</body>
+</html>

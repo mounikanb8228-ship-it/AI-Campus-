@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Visitor guide - Smart Campus Assistant{% endblock %}
+{% block head %}<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">{% endblock %}
+{% block scripts %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='js/campus.js') }}"></script>
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}
+{% block content %}
+<p class="eyebrow">Visitor guide</p>
+<h1>Welcome to VTU TechVista Campus</h1>
+{% if tier == 'member' %}<p class="callout">You are signed in, so you also have the <a href="{{ url_for('dashboard') }}">full member map and assistant</a>.</p>{% endif %}
+<p class="lead">Visiting hours are 9:30 AM to 4:30 PM, Monday to Saturday. Please check in at the Main Gate and carry a photo ID.</p>
+<div class="actions">
+  <a class="btn" href="{{ url_for('guide.checkin') }}">Get a visitor pass</a>
+</div>
+
+<h2>Where do you want to go?</h2>
+<div class="quick">
+  <button class="chip" type="button" data-dest="Administration Block">Admissions / Principal</button>
+  <button class="chip" type="button" data-dest="Central Library">Library</button>
+  <button class="chip" type="button" data-dest="Food Court">Food Court</button>
+  <button class="chip" type="button" data-dest="Medical Center">Medical Center</button>
+  <button class="chip" type="button" data-dest="Central Auditorium">Auditorium</button>
+  <button class="chip" type="button" data-dest="Parking Area">Parking</button>
+</div>
+<div class="split">
+  <div>
+    <div class="route-form">
+      <label for="start">From</label><select id="start"></select>
+      <label for="end">To</label><select id="end"></select>
+      <button class="btn" type="button" id="go">Show route</button>
+    </div>
+    <p id="route-info" class="route-info" role="status"></p>
+    <div id="map" class="map" aria-label="Campus map"></div>
+    <ol id="steps" class="steps"></ol>
+  </div>
+  <aside class="chat" aria-label="Visitor assistant">
+    <h2>Ask the visitor assistant</h2>
+    <div class="quick">
+      <button class="chip" type="button" data-q="What are the visiting hours?">Visiting hours</button>
+      <button class="chip" type="button" data-q="How do I reach the library from the main gate?">Reach the library</button>
+      <button class="chip" type="button" data-q="Tell me about admissions">Admissions</button>
+    </div>
+    <div id="chat-log" class="log" aria-live="polite"></div>
+    <form id="chat-form">
+      <label class="sr" for="chat-q">Your question</label>
+      <input id="chat-q" type="text" maxlength="300" placeholder="Ask about the college or a place" autocomplete="off">
+      <button class="btn small" type="submit">Ask</button>
+    </form>
+  </aside>
+</div>
+<p class="muted">Classrooms, labs, hostels, timetables and faculty details are for students and staff only. <a href="{{ url_for('auth.login') }}">Student or staff log in</a></p>
+{% endblock %}

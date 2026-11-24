@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Directory - Smart Campus Assistant{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/directory.js') }}"></script>{% endblock %}
+{% block content %}
+<h1>Directory</h1>
+<div class="tabs" role="tablist">
+  <button class="tab active" type="button" data-src="/departments">Departments</button>
+  <button class="tab" type="button" data-src="/faculty">Faculty</button>
+  <button class="tab" type="button" data-src="/rooms">Rooms</button>
+  <button class="tab" type="button" data-src="/timetable">Timetable</button>
+</div>
+<div class="table-wrap"><table id="grid"></table></div>
+{% endblock %}

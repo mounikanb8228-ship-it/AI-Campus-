@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}QR codes - Admin{% endblock %}
+{% block content %}
+<h1>Administration</h1>
+<div class="noprint">{% include "admin_nav.html" %}
+<p class="muted">Print this sheet and put each code at its building. Anyone who scans a public place sees its information and directions from that spot. Members-only places ask for sign-in. Set <code>SITE_URL</code> in <code>.env</code> to the real address first.</p>
+<button class="btn" type="button" id="print-poster">Print this sheet</button></div>
+<div class="qr-grid">
+{% for p in places %}<figure class="qr-card"><img src="{{ url_for('admin.qr_place', pid=p['id']) }}" alt="QR code for {{ p['name'] }}" width="150" height="150">
+<figcaption><strong>{{ p['name'] }}</strong><br><span class="badge {{ 'info' if p['is_public'] else 'warn' }}">{{ 'Visitors and members' if p['is_public'] else 'Members only' }}</span></figcaption></figure>{% endfor %}
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/showcase.js') }}"></script>{% endblock %}

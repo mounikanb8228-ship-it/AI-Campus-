@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Waiting for approval - Smart Campus Assistant{% endblock %}
+{% block content %}
+<section class="panel narrow center">
+  <h1>Waiting for approval</h1>
+  <p class="lead">Your account ({{ g.user['usn'] }}) has not been approved yet, so college information stays hidden.</p>
+  <p class="muted">An administrator will review your request. Contact the college office if this takes long.</p>
+  <form method="post" action="{{ url_for('auth.logout') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button class="btn ghost" type="submit">Log out</button>
+  </form>
+</section>
+{% endblock %}

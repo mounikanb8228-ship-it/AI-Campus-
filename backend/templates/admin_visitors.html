@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Visitors - Admin{% endblock %}
+{% block content %}
+<h1>Administration</h1>
+{% include "admin_nav.html" %}
+<h2>Check a visitor pass</h2>
+<form method="get" class="route-form">
+  <label for="code">Pass code</label>
+  <input id="code" name="code" maxlength="12" autocapitalize="characters" value="{{ code }}">
+  <button class="btn" type="submit">Check</button>
+</form>
+{% if code %}
+  {% if checked %}
+    <p class="flash {{ 'ok' if checked['valid_until'] > now else 'error' }}">{{ checked['name'] }} &middot; {{ checked['purpose'] }}{% if checked['host'] %} &middot; meeting {{ checked['host'] }}{% endif %} &middot; {{ 'VALID until ' if checked['valid_until'] > now else 'EXPIRED at ' }}{{ fmt(checked['valid_until']) }}</p>
+  {% else %}<p class="flash error">No visitor pass with that code.</p>{% endif %}
+{% endif %}
+<h2>Recent check-ins</h2>
+<div class="table-wrap"><table>
+<tr><th>Code</th><th>Name</th><th>Purpose</th><th>Meeting</th><th>Checked in</th><th>Valid until</th></tr>
+{% for v in recent %}<tr><td>{{ v['code'] }}</td><td>{{ v['name'] }}</td><td>{{ v['purpose'] }}</td><td>{{ v['host'] }}</td><td>{{ fmt(v['created_at']) }}</td><td>{{ fmt(v['valid_until']) }}</td></tr>
+{% else %}<tr><td colspan="6" class="muted">No visitors yet.</td></tr>{% endfor %}</table></div>
+<p class="muted">Only name, purpose and who they are meeting are stored. No phone numbers.</p>
+{% endblock %}

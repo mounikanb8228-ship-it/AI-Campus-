@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Knowledge base - Admin{% endblock %}
+{% block content %}
+<h1>Administration</h1>
+{% include "admin_nav.html" %}
+<p class="muted">The assistant answers from these documents. <strong>Public</strong> documents are read by visitors and members. <strong>Members</strong> documents are never given to visitors.</p>
+<div class="table-wrap"><table>
+<tr><th>Title</th><th>Audience</th><th>Size</th><th>Action</th></tr>
+{% for d in docs %}<tr><td>{{ d['title'] }}</td><td><span class="badge {{ 'info' if d['audience'] == 'public' else 'warn' }}">{{ d['audience'] }}</span></td><td>{{ d['size'] }} chars</td><td>
+<a class="btn small ghost" href="{{ url_for('admin.knowledge', edit=d['id']) }}">Edit</a>
+<form class="inline" method="post" action="{{ url_for('admin.knowledge_delete', doc_id=d['id']) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn small ghost" type="submit">Delete</button></form></td></tr>
+{% endfor %}</table></div>
+<h2>{{ 'Edit document' if edit else 'Add a document' }}</h2>
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  {% if edit %}<input type="hidden" name="id" value="{{ edit['id'] }}">{% endif %}
+  <label for="title">Title</label>
+  <input id="title" name="title" type="text" maxlength="120" required value="{{ edit['title'] if edit else '' }}">
+  <label for="audience">Who may read it through the assistant</label>
+  <select id="audience" name="audience">
+    <option value="public" {{ 'selected' if edit and edit['audience'] == 'public' }}>Public (visitors and members)</option>
+    <option value="members" {{ 'selected' if not edit or edit['audience'] == 'members' }}>Members only</option>
+  </select>
+  <label for="body">Text (short paragraphs work best)</label>
+  <textarea id="body" name="body" rows="8" maxlength="8000" required>{{ edit['body'] if edit else '' }}</textarea>
+  <button class="btn" type="submit">{{ 'Save changes' if edit else 'Add document' }}</button>
+</form>
+{% endblock %}

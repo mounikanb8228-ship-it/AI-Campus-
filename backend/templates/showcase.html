@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Scan to open - Smart Campus Assistant{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/showcase.js') }}"></script>{% endblock %}
+{% block content %}
+<div class="poster-grid">
+  <section class="poster">
+    <p class="eyebrow">Visitors</p>
+    <h1>Scan for the campus guide</h1>
+    <img class="qr" src="{{ url_for('showcase_qr', **{'for': 'visit'}) }}" alt="QR code that opens the visitor guide" width="280" height="280">
+    <p class="lead">Directions, visiting hours and help. No account needed.</p>
+    <p class="url">{{ visit_url }}</p>
+  </section>
+  <section class="poster">
+    <p class="eyebrow">Students and staff</p>
+    <h1>Scan to log in</h1>
+    <img class="qr" src="{{ url_for('showcase_qr', **{'for': 'login'}) }}" alt="QR code that opens the student and staff log in page" width="280" height="280">
+    <p class="lead">Full map, timetable, faculty and the AI assistant.</p>
+    <p class="url">{{ login_url }}</p>
+  </section>
+</div>
+<p class="center"><button class="btn noprint" type="button" id="print-poster">Print these posters</button></p>
+{% endblock %}

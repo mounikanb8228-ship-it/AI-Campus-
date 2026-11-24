@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Map and assistant - Smart Campus Assistant{% endblock %}
+{% block head %}<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">{% endblock %}
+{% block scripts %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='js/campus.js') }}"></script>
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}
+{% block content %}
+<h1>Welcome, {{ user['name'] }}</h1>
+<p class="muted">Signed in as {{ user['role'] }}. You can see every building, the timetable and the faculty directory.</p>
+<div class="split">
+  <div>
+    <div class="route-form">
+      <label for="start">From</label><select id="start"></select>
+      <label for="end">To</label><select id="end"></select>
+      <button class="btn" type="button" id="go">Find shortest route</button>
+    </div>
+    <p id="route-info" class="route-info" role="status"></p>
+    <div id="map" class="map" aria-label="Campus map"></div>
+    <ol id="steps" class="steps"></ol>
+  </div>
+  <aside class="chat" aria-label="Campus assistant">
+    <h2>Campus assistant</h2>
+    <div class="quick">
+      <button class="chip" type="button" data-q="Show today's timetable">Timetable</button>
+      <button class="chip" type="button" data-q="Who is the HOD of CSE?">HOD of CSE</button>
+      <button class="chip" type="button" data-q="Route from main gate to CSE block">Route to CSE</button>
+      <button class="chip" type="button" data-q="What are the library rules?">Library rules</button>
+      <button class="chip" type="button" data-q="Where is CSE-101?">Find a room</button>
+    </div>
+    <div id="chat-log" class="log" aria-live="polite"></div>
+    <form id="chat-form">
+      <label class="sr" for="chat-q">Your question</label>
+      <input id="chat-q" type="text" maxlength="300" placeholder="Ask about rules, rooms, faculty or routes" autocomplete="off">
+      <button class="btn small" type="submit">Ask</button>
+    </form>
+  </aside>
+</div>
+{% endblock %}

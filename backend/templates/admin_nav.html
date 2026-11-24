@@ -1,0 +1,11 @@
+<nav class="tabs" aria-label="Admin">
+  <a class="tab {{ 'active' if request.endpoint == 'admin.users' }}" href="{{ url_for('admin.users') }}">Members</a>
+  <a class="tab {{ 'active' if request.endpoint == 'admin.usns' }}" href="{{ url_for('admin.usns') }}">USN list</a>
+  <a class="tab {{ 'active' if request.endpoint == 'admin.knowledge' }}" href="{{ url_for('admin.knowledge') }}">Knowledge base</a>
+  <a class="tab {{ 'active' if request.endpoint == 'admin.places_admin' }}" href="{{ url_for('admin.places_admin') }}">Places</a>
+  <a class="tab {{ 'active' if request.endpoint == 'admin.visitors' }}" href="{{ url_for('admin.visitors') }}">Visitors</a>
+  <a class="tab {{ 'active' if request.endpoint == 'admin.analytics' }}" href="{{ url_for('admin.analytics') }}">Usage</a>
+  <a class="tab {{ 'active' if request.endpoint == 'admin.qr_sheet' }}" href="{{ url_for('admin.qr_sheet') }}">QR codes</a>
+  <a class="tab {{ 'active' if request.endpoint == 'admin.audit' }}" href="{{ url_for('admin.audit') }}">Security log</a>
+  <a class="tab {{ 'active' if request.endpoint == 'admin.security' }}" href="{{ url_for('admin.security') }}">Scan report</a>
+</nav>

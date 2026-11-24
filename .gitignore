@@ -1,0 +1,8 @@
+.env
+.secret_key
+auth.db
+campus.db
+venv*/
+__pycache__/
+reports/*.json
+reports/*.html

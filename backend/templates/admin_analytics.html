@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Usage - Admin{% endblock %}
+{% block content %}
+<h1>Administration</h1>
+{% include "admin_nav.html" %}
+<p class="muted">Last 7 days. Questions asked in the chat are not stored, only what kind of question it was.</p>
+<p><strong>Visitor guide opened:</strong> {{ scans.get('qr', 0) }} from the QR code, {{ scans.get('direct', 0) }} by direct link.</p>
+<div class="table-wrap"><table>
+<tr><th>Day</th>{% for e in events %}<th>{{ e.replace('_', ' ') }}</th>{% endfor %}</tr>
+{% for day, vals in days.items() %}<tr><td>{{ day }}</td>{% for e in events %}<td>{{ vals.get(e, 0) }}</td>{% endfor %}</tr>
+{% else %}<tr><td colspan="{{ events|length + 1 }}" class="muted">No activity yet.</td></tr>{% endfor %}</table></div>
+<h2>What people ask the assistant</h2>
+<div class="table-wrap"><table><tr><th>Kind of question / how it was answered</th><th>Times</th></tr>
+{% for c in chats %}<tr><td>{{ c['detail'] }}</td><td>{{ c['n'] }}</td></tr>{% else %}<tr><td colspan="2" class="muted">No questions yet.</td></tr>{% endfor %}</table></div>
+{% endblock %}

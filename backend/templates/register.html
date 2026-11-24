@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Register - Smart Campus Assistant{% endblock %}
+{% block content %}
+<section class="panel narrow">
+  <h1>Register</h1>
+  <p class="muted">Enter the activation code from the college office to join straight away. With no code, your request goes to an administrator for approval.</p>
+  <form method="post" autocomplete="off">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label for="usn">USN or staff ID</label>
+    <input id="usn" name="usn" type="text" required maxlength="15" autocapitalize="characters" value="{{ usn or '' }}">
+    <label for="name">Full name</label>
+    <input id="name" name="name" type="text" required maxlength="80" autocomplete="name" value="{{ name or '' }}">
+    <label for="code">Activation code (optional)</label>
+    <input id="code" name="code" type="text" maxlength="20" autocapitalize="characters">
+    <label for="password">Password (10+ characters, letters and numbers)</label>
+    <input id="password" name="password" type="password" required minlength="10" maxlength="200" autocomplete="new-password">
+    <label for="confirm">Confirm password</label>
+    <input id="confirm" name="confirm" type="password" required minlength="10" maxlength="200" autocomplete="new-password">
+    <button class="btn" type="submit">Create account</button>
+  </form>
+  <p class="muted">Already registered? <a href="{{ url_for('auth.login') }}">Log in</a></p>
+</section>
+{% endblock %}

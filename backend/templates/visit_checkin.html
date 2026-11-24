@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Visitor check-in - Smart Campus Assistant{% endblock %}
+{% block content %}
+<section class="panel narrow">
+  <h1>Visitor check-in</h1>
+  <p class="muted">Get a pass code to show at the Main Gate. We keep only your name, purpose and who you are meeting.</p>
+  {% if error %}<p class="flash error" role="alert">{{ error }}</p>{% endif %}
+  <form method="post" autocomplete="off">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label for="name">Your name</label>
+    <input id="name" name="name" type="text" required maxlength="60" value="{{ name or '' }}">
+    <label for="purpose">Purpose of visit</label>
+    <select id="purpose" name="purpose" required>
+      {% for p in purposes %}<option value="{{ p }}" {{ 'selected' if p == purpose }}>{{ p }}</option>{% endfor %}
+    </select>
+    <label for="host">Who are you meeting? (optional)</label>
+    <input id="host" name="host" type="text" maxlength="60" value="{{ host or '' }}">
+    <button class="btn" type="submit">Get my pass</button>
+  </form>
+</section>
+{% endblock %}

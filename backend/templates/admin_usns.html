@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}USN list - Admin{% endblock %}
+{% block content %}
+<h1>Administration</h1>
+{% include "admin_nav.html" %}
+<p class="muted">On the list: {{ total }} &middot; activation code not yet used: {{ unused }}</p>
+{% if issued %}
+<h2>Activation codes (shown only once)</h2>
+<p class="muted">Hand each code to the right person. Codes cannot be shown again; they are stored as hashes.</p>
+<div class="table-wrap"><table>
+<tr><th>USN / ID</th><th>Name</th><th>Role</th><th>Activation code</th></tr>
+{% for usn, name, role, code in issued %}<tr><td>{{ usn }}</td><td>{{ name }}</td><td>{{ role }}</td><td><code>{{ code }}</code></td></tr>{% endfor %}
+</table></div>
+{% endif %}
+<h2>Add people to the college list</h2>
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label for="rows">One per line: USN or staff ID, full name, role (student or faculty)</label>
+  <textarea id="rows" name="rows" rows="6" maxlength="50000" placeholder="1UC24CS101,Sample Student,student"></textarea>
+  <button class="btn" type="submit">Create activation codes</button>
+</form>
+{% endblock %}

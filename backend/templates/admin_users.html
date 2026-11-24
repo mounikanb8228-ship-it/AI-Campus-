@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Members - Admin{% endblock %}
+{% block content %}
+<h1>Administration</h1>
+{% include "admin_nav.html" %}
+<div class="table-wrap"><table>
+<tr><th>USN / ID</th><th>Name</th><th>Role</th><th>Status</th><th>Action</th></tr>
+{% for m in users %}
+<tr><td>{{ m['usn'] }}</td><td>{{ m['name'] }}</td><td>{{ m['role'] }}</td><td><span class="badge {{ 'pass' if m['status'] == 'active' else ('warn' if m['status'] == 'pending' else 'fail') }}">{{ m['status'] }}</span></td><td>
+{% if m['role'] != 'admin' %}
+  {% if m['status'] == 'pending' %}
+  <form class="inline" method="post" action="{{ url_for('admin.user_action', user_id=m['id'], action='approve') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label class="sr" for="role{{ m['id'] }}">Role</label>
+    <select id="role{{ m['id'] }}" name="role" class="mini"><option value="student">Student</option><option value="faculty">Faculty</option></select>
+    <button class="btn small" type="submit">Approve</button>
+  </form>
+  {% endif %}
+  {% if m['status'] == 'active' %}
+  <form class="inline" method="post" action="{{ url_for('admin.user_action', user_id=m['id'], action='disable') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn small ghost" type="submit">Disable</button></form>
+  {% elif m['status'] == 'disabled' %}
+  <form class="inline" method="post" action="{{ url_for('admin.user_action', user_id=m['id'], action='enable') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn small ghost" type="submit">Enable</button></form>
+  {% endif %}
+{% endif %}</td></tr>
+{% else %}
+<tr><td colspan="5" class="muted">No members yet.</td></tr>
+{% endfor %}</table></div>
+{% endblock %}

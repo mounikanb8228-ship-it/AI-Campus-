@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">VTU TechVista Campus</p>
+  <h1>Smart Campus Assistant</h1>
+  <p class="lead">A campus guide with maps, walking routes and an AI assistant. Choose how you are using it.</p>
+</section>
+<section class="doors">
+  <a class="door" href="{{ url_for('guide.portal') }}">
+    <span class="badge info tag">No account needed</span>
+    <h2>I am a visitor</h2>
+    <p>Visiting hours, admissions help, directions to public places, and a visitor assistant.</p>
+  </a>
+  <a class="door" href="{{ url_for('auth.login') }}">
+    <span class="badge pass tag">Students and staff</span>
+    <h2>Log in with my USN</h2>
+    <p>Full campus map, routes to every building, timetable, faculty directory and the AI assistant.</p>
+  </a>
+</section>
+<p class="muted">New student or staff member? <a href="{{ url_for('auth.register') }}">Register with your USN</a> using the activation code from the college office, or request approval.</p>
+{% endblock %}

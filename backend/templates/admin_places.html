@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Places - Admin{% endblock %}
+{% block content %}
+<h1>Administration</h1>
+{% include "admin_nav.html" %}
+<p class="muted">Tick <strong>Visitors may see</strong> only for places that anyone who scans the QR code may know about and walk to. Unticked places stay hidden from visitors everywhere: map, routes and assistant.</p>
+<div class="table-wrap"><table>
+<tr><th>Place</th><th>Category</th><th>Visitors may see</th><th>Short note for visitors</th><th></th></tr>
+{% for p in places %}<tr>
+<td><form id="f{{ p['id'] }}" method="post"><input type="hidden" name="id" value="{{ p['id'] }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"></form>{{ p['name'] }}</td>
+<td>{{ p['category'] }}</td>
+<td><label class="sr" for="pub{{ p['id'] }}">Visitors may see {{ p['name'] }}</label><input id="pub{{ p['id'] }}" form="f{{ p['id'] }}" type="checkbox" name="is_public" value="1" {{ 'checked' if p['is_public'] }}></td>
+<td><label class="sr" for="inf{{ p['id'] }}">Note</label><input form="f{{ p['id'] }}" id="inf{{ p['id'] }}" name="info" maxlength="300" value="{{ p['info'] }}"></td>
+<td><button form="f{{ p['id'] }}" class="btn small" type="submit">Save</button></td></tr>
+{% endfor %}</table></div>
+{% endblock %}

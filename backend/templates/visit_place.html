@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ b['name'] }} - Smart Campus Assistant{% endblock %}
+{% block head %}<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">{% endblock %}
+{% block scripts %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='js/campus.js') }}"></script>
+{% endblock %}
+{% block content %}
+<p class="eyebrow">You are here</p>
+<h1>{{ b['name'] }}</h1>
+{% if b['info'] %}<p class="lead">{{ b['info'] }}</p>{% endif %}
+<div class="route-form">
+  <label for="start">From</label><select id="start"></select>
+  <label for="end">To</label><select id="end"></select>
+  <button class="btn" type="button" id="go">Show route</button>
+</div>
+<p id="route-info" class="route-info" role="status"></p>
+<div id="map" class="map" data-start="{{ b['name'] }}" aria-label="Campus map"></div>
+<ol id="steps" class="steps"></ol>
+<p><a href="{{ url_for('guide.portal') }}">Back to the visitor guide</a></p>
+{% endblock %}

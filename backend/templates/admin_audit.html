@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Security log - Admin{% endblock %}
+{% block content %}
+<h1>Administration</h1>
+{% include "admin_nav.html" %}
+<div class="table-wrap"><table>
+<tr><th>Time</th><th>Event</th><th>USN</th><th>IP</th><th>Detail</th></tr>
+{% for e in rows %}
+<tr><td>{{ fmt(e['ts']) }}</td><td>{{ e['event'] }}</td><td>{{ e['usn'] or '' }}</td><td>{{ e['ip'] or '' }}</td><td>{{ e['detail'] or '' }}</td></tr>
+{% endfor %}</table></div>
+{% endblock %}

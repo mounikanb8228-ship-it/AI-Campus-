@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Your visitor pass - Smart Campus Assistant{% endblock %}
+{% block content %}
+<section class="poster">
+  <p class="eyebrow">Visitor pass</p>
+  <p class="big">{{ p['code'] }}</p>
+  <img class="qr" src="{{ url_for('guide.visitor_pass_svg') }}" alt="QR code of your visitor pass" width="220" height="220">
+  <p><strong>{{ p['name'] }}</strong><br>{{ p['purpose'] }}{% if p['host'] %} &middot; meeting {{ p['host'] }}{% endif %}</p>
+  {% if valid %}<p class="muted">Valid until {{ until }} ({{ hours }} hours). Show this at the Main Gate.</p>
+  {% else %}<p class="flash error">This pass has expired. Please check in again.</p>{% endif %}
+  <a class="btn" href="{{ url_for('guide.portal') }}">Open the visitor guide</a>
+</section>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Students and staff only - Smart Campus Assistant{% endblock %}
+{% block content %}
+<section class="panel narrow center">
+  <h1>Students and staff only</h1>
+  <p class="lead">This place is not part of the visitor guide.</p>
+  <div class="actions" style="justify-content:center">
+    <a class="btn" href="{{ url_for('auth.login', next=next_url) }}">Student / staff log in</a>
+    <a class="btn ghost" href="{{ url_for('guide.portal') }}">Visitor guide</a>
+  </div>
+</section>
+{% endblock %}

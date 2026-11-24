@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ code }} - Smart Campus Assistant{% endblock %}
+{% block content %}
+<section class="panel narrow center">
+  <h1>{{ code }}</h1>
+  <p class="lead">{{ title }}</p>
+  <p class="muted">{{ message }}</p>
+  <a class="btn" href="{{ url_for('landing') }}">Back to start</a>
+</section>
+{% endblock %}
